@@ -1,0 +1,48 @@
+@font-face {
+  font-family: 'Bender';
+  src: url('/fonts/Bender/Bender.woff2') Sformat('woff2'),
+    url('/fonts/Bender/Bender.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Bender', sans-serif;
+}
+
+@font-face {
+  font-family: 'Bender-Bold';
+  src: url('/fonts/Bender-Bold/Bender-Bold.woff2') format('woff2'),
+    url('/fonts/Bender-Bold/Bender-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@import url('https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css');
+
+code {
+  font-family: 'JetBrains Mono';
+}
+
+[accesskey="h"],
+[accesskey="t"],
+[title="Tags"],
+[title="Search (Alt + /)"] {
+  color: #FB8817;
+}
+
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Bender-Bold', sans-serif;
+}
+
+.chroma {
+  background-color: unset;
+}
