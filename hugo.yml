@@ -93,6 +93,8 @@ params:
       url: "https://github.com/aronmav"
     - name: linkedin
       url: "https://www.linkedin.com/in/aronmav"
+    - name: 1С
+      url: "https://uc1.1c.ru/account/summary/?token=d11a904404d3d85f64470015a4348b47"
 
   # analytics:
   #   google:
