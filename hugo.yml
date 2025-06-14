@@ -79,12 +79,14 @@ params:
 
   # home-info mode
   homeInfoParams:
-    Title: "Привет, друг."
-    Content: "Меня зовут Андрей (AronMav) и здесь мой блог.\n\n 
-    Основные темы:\n\n 
-    -- 1С и около неё\n\n
-    -- 3D печать\n\n 
-    -- Разделиные клавиантуры\n\n"
+    Title: "Привет, друг!"
+    Content: "
+    Меня зовут Мерзляков Андрей (AronMav).
+    Обо мне:
+    -- 1C Senior Developer and Tech-Architect;
+    -- 1C Expert (CS70323);\n\n 
+    -- Rust Junior Developmer.\n\n 
+    И это мой Блог.
 
   socialIcons:
     - name: telegram
@@ -96,11 +98,11 @@ params:
     - name: 1С
       url: "https://uc1.1c.ru/account/summary/?token=d11a904404d3d85f64470015a4348b47"
 
-  # analytics:
+  analytics:
   #   google:
   #     SiteVerificationTag: "XYZabc"
-  #   yandex:
-  #     SiteVerificationTag: "XYZabc"
+    yandex:
+      SiteVerificationTag: "102638634"
 
   cover:
     hidden: true # hide everywhere but not in structured data
