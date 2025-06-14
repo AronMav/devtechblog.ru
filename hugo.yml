@@ -81,9 +81,9 @@ params:
   homeInfoParams:
     Title: "Привет, друг!"
     Content: "
-    Меня зовут Мерзляков Андрей (AronMav).
-    Обо мне:
-    -- 1C Senior Developer and Tech-Architect;
+    Меня зовут Мерзляков Андрей (AronMav).\n\n 
+    Обо мне:\n\n 
+    -- 1C Senior Developer and Tech-Architect;\n\n 
     -- 1C Expert (CS70323);\n\n 
     -- Rust Junior Developmer.\n\n 
     И это мой Блог."
