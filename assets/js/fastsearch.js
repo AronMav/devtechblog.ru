@@ -48,7 +48,7 @@ window.onload = function () {
             }
         }
     };
-    xhr.open("GET", "https://devtechblog.ru/index.json");
+    xhr.open("GET", "https://devtechblog.ru/index.html");
     xhr.send();
 }
 
