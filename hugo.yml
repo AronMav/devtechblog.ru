@@ -81,11 +81,13 @@ params:
   homeInfoParams:
     Title: "Привет, друг!"
     Content: "
-    Меня зовут Мерзляков Андрей (AronMav) и это мой блог.\n\n 
-    Обо мне:\n\n 
+    **Меня зовут Мерзляков Андрей (AronMav) и это мой блог.**\n\n 
+    **Обо мне:**\n\n 
     -- 1C Senior Developer and Tech-Architect;\n\n 
     -- 1C Expert (CS70323);\n\n 
-    -- Rust Junior Developmer.\n\n"
+    -- Rust Junior Developmer.\n\n
+    **Сейчас в работе:**\n\n
+    -- Описание настройки сборочной линии для 1С через [jenkins-lib](https://github.com/firstBitMarksistskaya/jenkins-lib)"
 
   socialIcons:
     - name: telegram
