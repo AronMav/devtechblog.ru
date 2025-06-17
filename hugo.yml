@@ -85,7 +85,7 @@ params:
     **Обо мне:**\n\n 
     -- 1C Senior Developer and Tech-Architect;\n\n 
     -- 1C Expert (CS70323);\n\n 
-    -- Rust Junior Developmer.\n\n
+    -- Rust, Docker;\n\n
     **Сейчас в работе:**\n\n
     -- Описание настройки сборочной линии для 1С через [jenkins-lib](https://github.com/firstBitMarksistskaya/jenkins-lib)"
 
@@ -123,13 +123,13 @@ params:
     keys: ["title", "permalink", "summary", "content"]
 menu:
   main:
-    - identifier: Search
-      name: Search
-      url: /search/
-      weight: 10
     - identifier: Tags
       name: Tags
       url: /tags/
+      weight: 10
+    - identifier: Search
+      name: Search
+      url: /search/
       weight: 20
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
