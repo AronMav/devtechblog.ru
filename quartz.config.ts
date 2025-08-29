@@ -20,9 +20,10 @@ const config: QuartzConfig = {
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
-      fontOrigin: "JetBrains Mono",
+      fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
+        title: "JetBrains Mono",
         header: "JetBrains Mono",
         body: "JetBrains Mono",
         code: "Fira Code",
