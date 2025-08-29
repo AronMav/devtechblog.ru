@@ -26,7 +26,7 @@ const config: QuartzConfig = {
         title: "JetBrains Mono",
         header: "JetBrains Mono",
         body: "JetBrains Mono",
-        code: "Fira Code",
+        code: "JetBrains Mono",
       },
       colors: {
         lightMode: {
