@@ -363,57 +363,122 @@ footer {
   }
 }
 
-// <1280: дерево — сворачиваемая полоса «РАЗДЕЛЫ ›» между баром и
-// контентом (зона grid-header пустует — page-header живёт внутри
-// .center). Правая обёртка растворяется, оглавление остаётся в своей
-// области после контента. Стоковые оверлей/скролл-лок глушим.
+// <1280: дерево и оглавление — выезжающие панели (drawer).
+// Под баром — строка из двух кнопок: «› разделы» слева, «на странице ‹»
+// справа. Панели выезжают из-за краёв экрана, закрываются кликом вне
+// или Esc (логика в nav-links). js-ready ставит скрипт — до него
+// панели гарантированно спрятаны (нет мигания при загрузке).
 @media all and (max-width: 1279px) {
+  // строка кнопок: дерево слева, оглавление справа
+  .page > #quartz-body {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "grid-sidebar-left grid-sidebar-left"
+      "grid-header grid-sidebar-right"
+      "grid-center grid-center"
+      "grid-footer grid-footer";
+  }
+
   .sidebar.right {
     display: contents;
   }
 
   .sidebar.right > .explorer {
     grid-area: grid-header;
-    margin-top: 1.1rem;
-    border: 1px solid var(--lightgray);
-    border-radius: 6px;
-    padding: 0.55rem 0.95rem;
+    margin-top: 0.9rem;
     flex: none;
+    justify-self: start;
   }
 
-  .explorer .explorer-content {
-    position: static;
-    transform: none;
+  .sidebar.right > .toc {
+    display: block; // база прячет .toc ниже 1024 — у нас он кнопка панели
+    grid-area: grid-sidebar-right;
+    margin-top: 0.9rem;
+    padding: 0;
+    justify-self: end;
   }
 
-  .explorer.collapsed .explorer-content {
-    display: none;
-  }
-
-  .explorer:not(.collapsed) .explorer-content {
-    display: block;
-    padding-top: 0.6rem;
-  }
-
-  // одна кнопка-полоса на всех ширинах; стоковый мобильный оверлей не нужен
+  // Кнопки-триггеры — тихие mono, как элементы бара
   .explorer button.mobile-explorer {
     display: none;
   }
 
-  .explorer button.desktop-explorer {
+  .explorer button.desktop-explorer,
+  .toc button.toc-header {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    width: 100%;
+    padding: 0.35rem 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--gray);
+
+    &:hover {
+      color: var(--secondary);
+    }
   }
 
+  // Панель дерева — слева
+  .explorer .explorer-content {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(320px, 85vw);
+    background-color: var(--light);
+    border-right: 1px solid var(--lightgray);
+    padding: 1.4rem 1.2rem;
+    overflow-y: auto;
+    z-index: 90;
+    transform: translateX(-105%);
+  }
+
+  .explorer.js-ready .explorer-content {
+    transition: transform 0.25s ease;
+  }
+
+  .explorer.js-ready:not(.collapsed) .explorer-content {
+    transform: none;
+  }
+
+  // Панель оглавления — справа
+  .toc .toc-content {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: min(320px, 85vw);
+    background-color: var(--light);
+    border-left: 1px solid var(--lightgray);
+    padding: 1.4rem 1.2rem;
+    overflow-y: auto;
+    z-index: 90;
+    transform: translateX(105%);
+    max-height: none;
+  }
+
+  .toc.js-ready .toc-content {
+    transition: transform 0.25s ease;
+  }
+
+  .toc.js-ready .toc-content:not(.collapsed) {
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .explorer.js-ready .explorer-content,
+    .toc.js-ready .toc-content {
+      transition: none;
+    }
+  }
+
+  // стоковый скролл-лок мобильного оверлея не нужен
   html.mobile-no-scroll {
     overflow: auto;
-  }
-
-  .sidebar.right > .toc {
-    grid-area: grid-sidebar-right;
-    margin-top: 1.4rem;
   }
 }
 
