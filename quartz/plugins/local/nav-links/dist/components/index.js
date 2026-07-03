@@ -35,6 +35,11 @@ var NavLinks = ({ fileData, displayClass }) => {
     /* @__PURE__ */ u2("a", { href: `${base}/tags`, children: "\u0442\u0435\u0433\u0438" })
   ] });
 };
+NavLinks.beforeDOMLoaded = `
+if (!sessionStorage.getItem("explorerScrollTop")) {
+  sessionStorage.setItem("explorerScrollTop", "0");
+}
+`;
 var NavLinks_default = (() => NavLinks);
 
 export { NavLinks_default as NavLinks };

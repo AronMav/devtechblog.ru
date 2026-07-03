@@ -280,24 +280,150 @@ footer {
   }
 }
 
-// Дерево разделов (explorer) — только на главной, под карточками.
-// Скрытие обычным селектором, без :has — работает в любом браузере.
-body:not([data-slug="index"]) .explorer {
-  display: none;
+// ─── Дерево разделов (explorer) — глобальная навигация ──────────────
+// Калибровка UI/UX: docs-паттерн. На ≥1280px дерево — левая колонка
+// (бар / [дерево 220 | статья | оглавление 272]); на 1024–1280 — в
+// правой колонке над оглавлением; ниже — под статьёй.
+// Технически: explorer лежит в .sidebar.right; на ≥1280 контейнер
+// правой колонки получает display:contents, и его дети становятся
+// grid-элементами #quartz-body — дерево уезжает в свою область.
+
+// Типографика дерева (все ширины): mono — слой служебной навигации
+.explorer {
+  font-family: var(--codeFont);
+
+  // Лейбл «РАЗДЕЛЫ» вместо стокового заголовка кнопки («Проводник»)
+  button.desktop-explorer,
+  button.mobile-explorer {
+    color: var(--gray);
+
+    > h2 {
+      display: none;
+    }
+
+    &::after {
+      content: "разделы";
+      font-family: var(--codeFont);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+  }
 }
 
-body[data-slug="index"] .explorer {
-  margin-top: 2.2rem;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--lightgray);
+.explorer-content {
+  // Статьи
+  ul li > a {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    padding: 0.18rem 0;
+    color: var(--darkgray);
 
-  // Кнопка-заголовок «Проводник» — как mono-заголовок раздела
-  button.explorer-toggle {
+    &:hover {
+      color: var(--secondary);
+    }
+
+    // Текущая страница: кромка-синька, как у колаутов
+    &.active {
+      color: var(--secondary);
+      font-weight: 600;
+      border-left: 2px solid var(--secondary);
+      padding-left: 0.5rem;
+      margin-left: -0.5rem;
+    }
+  }
+
+  // Папки (разделы)
+  .folder-container div > a,
+  .folder-container div > button span {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  // Вложенность: 14px + направляющая линия
+  .folder-outer > ul {
+    padding-left: 14px;
+    border-left: 1px solid var(--lightgray);
+  }
+}
+
+// Оглавление: тихий mono-лейбл «НА СТРАНИЦЕ» вместо «Оглавление» —
+// пара к «РАЗДЕЛЫ»: слева «где в сайте», справа «где в статье»
+.toc button.toc-header h3 {
+  font-size: 0;
+
+  &::after {
+    content: "на странице";
     font-family: var(--codeFont);
-    font-size: 0.74rem;
+    font-size: 0.68rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--gray);
+  }
+}
+
+// 1024–1280: дерево и оглавление в одной правой колонке, разделены
+@media all and ($desktop) and (max-width: 1279px) {
+  .sidebar.right > .toc {
+    margin-top: 1.6rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--lightgray);
+  }
+}
+
+// ≥1280: трёхколоночный docs-лейаут
+@media all and (min-width: 1280px) {
+  .page > #quartz-body {
+    max-width: 1280px;
+    grid-template-columns: 220px minmax(0, 1fr) 272px;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "grid-sidebar-left grid-sidebar-left grid-sidebar-left"
+      "grid-header grid-header grid-header"
+      "grid-tree grid-center grid-sidebar-right"
+      "grid-footer grid-footer grid-footer";
+    column-gap: 1.5rem;
+
+    // Контейнер правой зоны растворяется — дети становятся колонками
+    .sidebar.right {
+      display: contents;
+    }
+
+    .sidebar.right > .explorer {
+      grid-area: grid-tree;
+      position: sticky;
+      top: 1.2rem;
+      align-self: start;
+      max-height: calc(100vh - 2.4rem);
+      overflow-y: auto;
+      padding-top: 2.4rem;
+    }
+
+    .sidebar.right > .toc {
+      grid-area: grid-sidebar-right;
+      position: sticky;
+      top: 1.2rem;
+      align-self: start;
+      max-height: calc(100vh - 2.4rem);
+      overflow-y: auto;
+      padding-top: 2.4rem;
+    }
+  }
+
+  // Главная: дерево слева от карточек, оглавления нет
+  body[data-slug="index"] .page > #quartz-body {
+    grid-template-columns: 220px minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "grid-sidebar-left grid-sidebar-left"
+      "grid-header grid-header"
+      "grid-tree grid-center"
+      "grid-footer grid-footer";
+  }
+
+  body[data-slug="index"] .sidebar.right > .toc {
+    display: none;
   }
 }
 
@@ -362,21 +488,26 @@ body[data-slug="index"] {
     display: none;
   }
 
-  // На главной нет оглавления — правая колонка сетки не нужна:
-  // одна колонка, контент центрирован, футер прижат к низу вьюпорта
-  .page > #quartz-body {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr auto;
-    grid-template-areas:
-      "grid-sidebar-left"
-      "grid-header"
-      "grid-center"
-      "grid-footer";
-    min-height: 100vh;
+  // Ниже 1280 на главной — одна колонка (карточки), без дерева и TOC;
+  // с 1280 работает трёхколоночный блок выше (дерево слева от карточек)
+  @media all and (max-width: 1279px) {
+    .page > #quartz-body {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-areas:
+        "grid-sidebar-left"
+        "grid-header"
+        "grid-center"
+        "grid-footer";
+    }
+
+    .sidebar.right {
+      display: none;
+    }
   }
 
-  .sidebar.right {
-    display: none;
+  .page > #quartz-body {
+    min-height: 100vh;
   }
 
   .center {
