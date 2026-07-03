@@ -27,11 +27,11 @@
 **Goal:** Empirically confirm two assumptions the design relies on, before building: (a) `file.data` set in a `markdownPlugins` transformer is visible to an `htmlPlugins` transformer on the same file; (b) rehype-pretty-code emits exactly one `<figure data-rehype-pretty-code-figure>` per fenced code block, in document order. Throwaway — nothing here is committed.
 
 **Files:**
-- Create (temp, deleted at end): `content/_spike-collapse.md`
+- Create (temp, deleted at end): `content/collapse-spike.md`
 
 - [ ] **Step 1: Create a temporary fixture with two fenced blocks**
 
-Create `content/_spike-collapse.md`:
+Create `content/collapse-spike.md`:
 
 ````markdown
 ---
@@ -54,10 +54,13 @@ console.log("three")
 
 - [ ] **Step 2: Build and inspect the emitted HTML for figure structure**
 
-Run:
+The v5 slugger lowercases/rewrites names, so locate the output file
+dynamically rather than assuming its path:
 ```bash
 npx quartz build
-grep -o 'data-rehype-pretty-code-figure' public/_spike-collapse.html | wc -l
+SPIKE_HTML=$(find public -iname '*collapse-spike*.html' | head -1)
+echo "output file: $SPIKE_HTML"
+grep -o 'data-rehype-pretty-code-figure' "$SPIKE_HTML" | wc -l
 ```
 Expected: `2` (one figure per fenced block, confirming 1:1 order correspondence). Record the count.
 
@@ -65,15 +68,16 @@ Expected: `2` (one figure per fenced block, confirming 1:1 order correspondence)
 
 Run:
 ```bash
-grep -c '<figure' public/_spike-collapse.html
+SPIKE_HTML=$(find public -iname '*collapse-spike*.html' | head -1)
+grep -c '<figure' "$SPIKE_HTML"
 ```
 Expected: `2`. If it differs from Step 2, note it — our htmlPlugins figure filter must key on the `data-rehype-pretty-code-figure` property (it does).
 
 - [ ] **Step 4: Record findings and delete the fixture**
 
-Write one line into the plan's Task 1 (this file) under a `Spike result:` note: whether figure count == fenced-block count. Then:
+Note under this task whether figure count == fenced-block count (2). Then:
 ```bash
-rm content/_spike-collapse.md
+rm content/collapse-spike.md
 rm -rf public
 ```
 No commit (throwaway). If Step 2 did NOT yield one figure per block, STOP and revisit the design with the spec author before continuing.
@@ -127,8 +131,11 @@ No commit (throwaway). If Step 2 did NOT yield one figure per block, STOP and re
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
     "@types/node": "^24.10.0",
+    "remark-parse": "^11.0.0",
     "tsup": "^8.5.0",
     "typescript": "^5.9.3",
+    "unified": "^11.0.5",
+    "vfile": "^6.0.3",
     "vitest": "^2.1.9"
   },
   "engines": { "node": ">=22", "npm": ">=10.9.2" },
@@ -271,13 +278,24 @@ npx quartz build
 ```
 Expected: build succeeds, `Quartz v5.0.0`, no errors.
 
-- [ ] **Step 12: Commit**
+- [ ] **Step 12: Create the plugin `.gitignore`**
+
+The root `.gitignore` covers `node_modules` (global) and `public`, but NOT
+`quartz/plugins/local/collapse-code/dist/`. Create
+`quartz/plugins/local/collapse-code/.gitignore`:
+```gitignore
+dist/
+node_modules/
+*.tsbuildinfo
+```
+
+- [ ] **Step 13: Commit**
 
 ```bash
-git add quartz/plugins/local/collapse-code/package.json quartz/plugins/local/collapse-code/tsconfig.json quartz/plugins/local/collapse-code/tsconfig.build.json quartz/plugins/local/collapse-code/tsup.config.ts quartz/plugins/local/collapse-code/vitest.config.ts quartz/plugins/local/collapse-code/src quartz.config.default.yaml quartz.lock.json
+git add quartz/plugins/local/collapse-code/package.json quartz/plugins/local/collapse-code/tsconfig.json quartz/plugins/local/collapse-code/tsconfig.build.json quartz/plugins/local/collapse-code/tsup.config.ts quartz/plugins/local/collapse-code/vitest.config.ts quartz/plugins/local/collapse-code/src quartz/plugins/local/collapse-code/.gitignore quartz.config.default.yaml quartz.lock.json
+git status --short  # verify no dist/ or node_modules/ is staged
 git commit --no-verify -m "feat(collapse-code): scaffold local Quartz plugin"
 ```
-Note: do NOT commit `quartz/plugins/local/collapse-code/dist/` or `node_modules/` — add a `quartz/plugins/local/collapse-code/.gitignore` containing `dist/` and `node_modules/` in this step and stage it too.
 
 ---
 
@@ -487,11 +505,13 @@ import { visit } from "unist-util-visit";
 import type { Root, Element } from "hast";
 import type { VFile } from "vfile";
 
+// hast may store the data attribute either raw ("data-rehype-pretty-code-figure")
+// or camelCased ("dataRehypePrettyCodeFigure") depending on how it was built,
+// so normalize keys before comparing.
 function isPrettyCodeFigure(node: Element): boolean {
-  return (
-    node.tagName === "figure" &&
-    !!node.properties &&
-    "data-rehype-pretty-code-figure" in node.properties
+  if (node.tagName !== "figure" || !node.properties) return false;
+  return Object.keys(node.properties).some(
+    (k) => k.toLowerCase().replace(/-/g, "") === "datarehypeprettycodefigure",
   );
 }
 
@@ -714,7 +734,7 @@ git commit --no-verify -m "feat(collapse-code): inject collapse CSS"
 **Goal:** Rebuild the plugin, install it, build the site against a temporary fixture, and confirm the flagged block renders collapsed (class + checkbox + label present) while the unflagged block is untouched and the copy button still exists.
 
 **Files:**
-- Create (temp, deleted at end): `content/_verify-collapse.md`
+- Create (temp, deleted at end): `content/collapse-verify.md`
 
 - [ ] **Step 1: Rebuild the plugin and re-install into Quartz**
 
@@ -727,7 +747,7 @@ Expected: `collapse-code` builds and installs without errors.
 
 - [ ] **Step 2: Create a temporary verification fixture**
 
-Create `content/_verify-collapse.md`:
+Create `content/collapse-verify.md`:
 ````markdown
 ---
 title: Verify Collapse
@@ -759,18 +779,20 @@ Expected: build succeeds.
 
 Run:
 ```bash
-grep -c 'code-collapsible' public/_verify-collapse.html
-grep -c 'code-collapse-toggle' public/_verify-collapse.html
-grep -o 'Развернуть код' public/_verify-collapse.html | head -1
-grep -c 'clipboard-button\|data-rehype-pretty-code-figure' public/_verify-collapse.html
+VERIFY_HTML=$(find public -iname '*collapse-verify*.html' | head -1)
+echo "output file: $VERIFY_HTML"
+grep -c 'code-collapsible' "$VERIFY_HTML"
+grep -c 'code-collapse-toggle' "$VERIFY_HTML"
+grep -o 'Развернуть код' "$VERIFY_HTML" | head -1
+grep -c 'data-rehype-pretty-code-figure' "$VERIFY_HTML"
 ```
-Expected: `code-collapsible` == 1 (only the flagged block), `code-collapse-toggle` == 1, the label text present, and pretty-code figures/copy button still present (>= 2 figures). If `code-collapsible` != 1, the order-correlation is off — recheck Task 3/4 against the Task 1 spike result.
+Expected: `code-collapsible` == 1 (only the flagged block), `code-collapse-toggle` == 1, the label text present, and pretty-code figures still present (>= 2). If `code-collapsible` != 1, the order-correlation is off — recheck Task 3/4 against the Task 1 spike result and the `file.data` fallback in Self-Review Notes.
 
 - [ ] **Step 5: Confirm the CSS is present in the bundle**
 
 Run:
 ```bash
-grep -rl 'code-collapsible' public/*.css public/index.html public/_verify-collapse.html | head
+grep -rl 'code-collapsible' public/*.css public/*.html | head
 ```
 Expected: at least one match (the injected CSS shipped).
 
@@ -778,7 +800,7 @@ Expected: at least one match (the injected CSS shipped).
 
 Run:
 ```bash
-rm content/_verify-collapse.md
+rm content/collapse-verify.md
 rm -rf public
 ```
 
@@ -789,7 +811,7 @@ git add -A
 git status --short
 git commit --no-verify -m "chore(collapse-code): verified end-to-end build" || echo "nothing to commit"
 ```
-Do NOT commit `content/_verify-collapse.md` or `public/` (both removed/ignored).
+Do NOT commit `content/collapse-verify.md` or `public/` (both removed/ignored).
 
 ---
 
