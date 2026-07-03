@@ -4,8 +4,7 @@ configuration:
   pageTitleSuffix: DTB
   enableSPA: true
   enablePopovers: true
-  analytics:
-    provider: plausible
+  analytics: null
   locale: ru-RU
   baseUrl: devtechblog.ru
   ignorePatterns:
