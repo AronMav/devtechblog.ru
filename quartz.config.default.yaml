@@ -13,34 +13,34 @@ configuration:
     - templates
     - .obsidian
   theme:
-    fontOrigin: googleFonts
-    cdnCaching: true
+    fontOrigin: local
+    cdnCaching: false
     typography:
-      title: JetBrains Mono
-      header: JetBrains Mono
-      body: JetBrains Mono
-      code: JetBrains Mono
+      title: Segoe UI
+      header: Segoe UI
+      body: Segoe UI
+      code: Cascadia Code
     colors:
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#F7F8F9"
+        lightgray: "#DCDFE3"
+        gray: "#6A727B"
+        darkgray: "#1D2126"
+        dark: "#101317"
+        secondary: "#2B5FC7"
+        tertiary: "#1E4CAB"
+        highlight: rgba(43, 95, 199, 0.08)
+        textHighlight: rgba(43, 95, 199, 0.15)
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#16181B"
+        lightgray: "#2C3136"
+        gray: "#8B949C"
+        darkgray: "#DFE3E7"
+        dark: "#F2F4F6"
+        secondary: "#7DA6FF"
+        tertiary: "#9DBCFF"
+        highlight: rgba(125, 166, 255, 0.10)
+        textHighlight: rgba(125, 166, 255, 0.22)
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
@@ -100,16 +100,7 @@ plugins:
     enabled: false
     order: 92
   - source: github:quartz-community/fonts
-    enabled: true
-  - source:
-      name: quartz-themes
-      repo: github:saberzero1/quartz-themes
-      subdir: plugin
-    enabled: true
-    options:
-      theme: border
-      mode: both
-    order: 95
+    enabled: false
   - source: github:quartz-community/remove-draft
     enabled: true
   - source: github:quartz-community/explicit-publish
@@ -124,7 +115,7 @@ plugins:
   - source: github:quartz-community/favicon
     enabled: true
   - source: github:quartz-community/og-image
-    enabled: true
+    enabled: false
   - source: github:quartz-community/cname
     enabled: true
   - source: github:quartz-community/canvas-page
@@ -141,7 +132,7 @@ plugins:
       position: left
       priority: 50
   - source: github:quartz-community/graph
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 10
@@ -154,7 +145,7 @@ plugins:
       groupOptions:
         grow: true
   - source: github:quartz-community/backlinks
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 50
@@ -185,7 +176,7 @@ plugins:
       priority: 30
       group: toolbar
   - source: github:quartz-community/reader-mode
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 35
