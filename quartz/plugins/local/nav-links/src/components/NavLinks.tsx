@@ -14,7 +14,7 @@ const NavLinks: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
   return (
     <nav class={`nav-links ${displayClass ?? ""}`}>
       <a href={base}>заметки</a>
-      <a href={`${base}/tags`}>теги</a>
+      <a href={`${base}/tags/`}>теги</a>
     </nav>
   );
 };
