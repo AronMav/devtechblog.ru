@@ -169,6 +169,12 @@
       "commit": "3dcfedcb5ae5e28b71248a72665ccb881e82c185",
       "installedAt": "2026-06-03T13:16:36.841Z"
     },
+    "nav-links": {
+      "source": "./quartz/plugins/local/nav-links",
+      "resolved": "D:\\GIT\\devtechblog.ru\\quartz\\plugins\\local\\nav-links",
+      "commit": "local",
+      "installedAt": "2026-07-03T13:18:01.133Z"
+    },
     "note-properties": {
       "source": "github:quartz-community/note-properties",
       "resolved": "https://github.com/quartz-community/note-properties.git",

@@ -232,6 +232,45 @@ footer {
   }
 }
 
+// Нав-ссылки бара: «заметки · теги» — mono, как в макете
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+
+  a {
+    font-family: var(--codeFont);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--secondary);
+    }
+  }
+}
+
+// Список последних заметок — только на главной странице
+body:not([data-slug="index"]) .recent-notes {
+  display: none;
+}
+
+.recent-notes {
+  h3 {
+    border-bottom: 1px solid var(--lightgray);
+    padding-bottom: 0.4rem;
+  }
+
+  .meta {
+    font-family: var(--codeFont);
+    font-size: 0.72rem;
+    color: var(--gray);
+  }
+}
+
 button.darkmode {
   background: none;
   border: none;

@@ -202,7 +202,13 @@ plugins:
         RSS: /index.xml
         Sitemap: /sitemap.xml
   - source: github:quartz-community/recent-notes
-    enabled: false
+    enabled: true
+    options:
+      limit: 10
+      linkToMore: false
+    layout:
+      position: afterBody
+      priority: 10
   - source: github:quartz-community/spacer
     enabled: true
     options: {}
@@ -258,6 +264,14 @@ plugins:
     enabled: true
     options: {}
     order: 95
+  - source: ./quartz/plugins/local/nav-links
+    enabled: true
+    options: {}
+    order: 50
+    layout:
+      position: left
+      priority: 15
+      group: toolbar
 layout:
   groups:
     toolbar:
