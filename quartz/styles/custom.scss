@@ -5,7 +5,8 @@
 
 // Шрифты: системные стеки, ноль веб-шрифтов (fontOrigin: local в конфиге)
 :root {
-  --panel-bg: #eef0f2; // приподнятая поверхность (панели, код)
+  --panel-bg: #e4e7ea; // приподнятая поверхность (панели, код)
+  --accent-warm: #f07000; // фирменный оранж (из favicon): маркер, селекция, бренд-точка
   --titleFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --headerFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --bodyFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
@@ -22,6 +23,11 @@
 
   a {
     color: var(--dark);
+
+    &::after {
+      content: " ▪"; // фирменная тёплая точка
+      color: var(--accent-warm);
+    }
   }
 }
 
@@ -63,15 +69,16 @@ article h2,
 figure[data-rehype-pretty-code-figure] > pre {
   border: 1px solid var(--lightgray);
   border-radius: 6px;
-  background-color: #eef0f2;
+  background-color: var(--panel-bg);
 }
 
 :root[saved-theme="dark"] {
   --panel-bg: #21262c;
 }
 
-:root[saved-theme="dark"] figure[data-rehype-pretty-code-figure] > pre {
-  background-color: #21262c;
+// Выделение текста — тёплый маркер
+::selection {
+  background: var(--textHighlight);
 }
 
 // Ссылки: тонкое приглушённое подчёркивание, полный акцент по ховеру —
@@ -748,7 +755,7 @@ footer {
     font-size: 0.7rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--gray);
+    color: var(--accent-warm);
     margin-bottom: 0.35rem;
   }
 
