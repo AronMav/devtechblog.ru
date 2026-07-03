@@ -93,6 +93,93 @@ a.external .external-icon {
   height: 0.65em;
 }
 
+// Переход по якорю: заголовок коротко подсвечивается, чтобы глаз
+// сразу нашёл место; отступ от края при скролле
+article :is(h1, h2, h3, h4)[id] {
+  scroll-margin-top: 1.4rem;
+
+  &:target {
+    animation: cc-target-flash 1.8s ease-out 1;
+  }
+}
+
+@keyframes cc-target-flash {
+  0% {
+    background-color: var(--textHighlight);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  article :is(h1, h2, h3, h4)[id]:target {
+    animation: none;
+    background-color: var(--textHighlight);
+  }
+}
+
+// Якорь-ссылка заголовка (¶): невидим, проявляется по ховеру заголовка
+article :is(h1, h2, h3, h4) a[role="anchor"] {
+  opacity: 0;
+  margin-left: 0.4rem;
+  color: var(--gray);
+  transition: opacity 0.15s ease;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+  }
+
+  &:hover {
+    color: var(--secondary);
+  }
+}
+
+article :is(h1, h2, h3, h4):hover a[role="anchor"],
+article a[role="anchor"]:focus-visible {
+  opacity: 1;
+}
+
+// Интро на главной — приглушённая строка над карточками
+body[data-slug="index"] .center > article > p {
+  color: var(--gray);
+  font-size: 0.95rem;
+  max-width: 44rem;
+  margin: 0 0 1.8rem;
+}
+
+// 404 — по центру, в духе системы: mono-код ошибки, тихий текст
+body[data-slug="404"] {
+  .center > article {
+    text-align: center;
+    padding-top: 14vh;
+
+    h1 {
+      font-family: var(--codeFont);
+      font-size: 5rem;
+      letter-spacing: 0.08em;
+      color: var(--secondary);
+      margin: 0 0 0.4rem;
+      border: none;
+    }
+
+    p {
+      color: var(--gray);
+      margin: 0 0 1.2rem;
+    }
+
+    a {
+      font-family: var(--codeFont);
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+  }
+}
+
 // Колауты: монохром — прозрачный фон, hairline-рамка, цвет типа
 // остаётся только в левой кромке, заголовке и иконке
 .callout {
@@ -260,6 +347,20 @@ footer {
     &:hover,
     &:focus-visible {
       color: var(--secondary);
+    }
+
+    // подсказка хоткея — поиск слушает Ctrl/⌘+K
+    @media all and (min-width: 1024px) {
+      &::after {
+        content: "ctrl k";
+        font-size: 0.6rem;
+        letter-spacing: 0.06em;
+        color: var(--gray);
+        border: 1px solid var(--lightgray);
+        border-radius: 3px;
+        padding: 0.1rem 0.3rem;
+        margin-left: 0.15rem;
+      }
     }
   }
 }
