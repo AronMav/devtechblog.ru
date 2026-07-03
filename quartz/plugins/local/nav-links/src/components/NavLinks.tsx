@@ -115,6 +115,25 @@ function ccCloseDrawers(target) {
 ccPrepareDrawers();
 document.addEventListener("nav", ccPrepareDrawers);
 document.addEventListener("click", function (e) {
+  // Выбор пункта внутри панели закрывает её (якоря оглавления не
+  // порождают nav-событие — закрываем сами; для дерева так же удобнее)
+  if (ccNarrow.matches && e.target && e.target.closest) {
+    var link = e.target.closest(".toc-content a, .explorer-content a");
+    if (link) {
+      var tocBtn2 = link.closest(".toc-content") ? ccTocBtn() : null;
+      var exBtn2 = link.closest(".explorer-content")
+        ? document.querySelector(".explorer button.desktop-explorer")
+        : null;
+      var b = tocBtn2 || exBtn2;
+      if (b && !b.classList.contains("collapsed")) b.click();
+      if (exBtn2) {
+        var ex2 = document.querySelector(".explorer");
+        if (ex2 && !ex2.classList.contains("collapsed")) exBtn2.click();
+      }
+      ccSync();
+      return;
+    }
+  }
   ccCloseDrawers(e.target);
   ccSync();
 });

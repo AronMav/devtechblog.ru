@@ -353,6 +353,43 @@ footer {
   }
 }
 
+// Оглавление — той же типографикой, что дерево разделов: mono-слой
+// навигации, активный раздел — кромка-синька (как active в дереве)
+.toc-content {
+  font-family: var(--codeFont);
+
+  ul {
+    list-style: none;
+    margin: 0.4rem 0 0;
+    padding: 0;
+  }
+
+  li > a {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    padding: 0.18rem 0;
+    color: var(--darkgray);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--secondary);
+    }
+
+    &.in-view {
+      color: var(--secondary);
+      font-weight: 600;
+      border-left: 2px solid var(--secondary);
+      padding-left: 0.5rem;
+      margin-left: -0.5rem;
+    }
+  }
+
+  li.depth-1 > a { padding-left: 14px; }
+  li.depth-2 > a { padding-left: 28px; }
+  li.depth-3 > a { padding-left: 42px; }
+}
+
 // Оглавление: тихий mono-лейбл «НА СТРАНИЦЕ» вместо «Оглавление» —
 // пара к «РАЗДЕЛЫ»: слева «где в сайте», справа «где в статье»
 .toc button.toc-header h3 {

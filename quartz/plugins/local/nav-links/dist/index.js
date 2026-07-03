@@ -121,6 +121,25 @@ function ccCloseDrawers(target) {
 ccPrepareDrawers();
 document.addEventListener("nav", ccPrepareDrawers);
 document.addEventListener("click", function (e) {
+  // \u0412\u044B\u0431\u043E\u0440 \u043F\u0443\u043D\u043A\u0442\u0430 \u0432\u043D\u0443\u0442\u0440\u0438 \u043F\u0430\u043D\u0435\u043B\u0438 \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0435\u0451 (\u044F\u043A\u043E\u0440\u044F \u043E\u0433\u043B\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043D\u0435
+  // \u043F\u043E\u0440\u043E\u0436\u0434\u0430\u044E\u0442 nav-\u0441\u043E\u0431\u044B\u0442\u0438\u0435 \u2014 \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u0435\u043C \u0441\u0430\u043C\u0438; \u0434\u043B\u044F \u0434\u0435\u0440\u0435\u0432\u0430 \u0442\u0430\u043A \u0436\u0435 \u0443\u0434\u043E\u0431\u043D\u0435\u0435)
+  if (ccNarrow.matches && e.target && e.target.closest) {
+    var link = e.target.closest(".toc-content a, .explorer-content a");
+    if (link) {
+      var tocBtn2 = link.closest(".toc-content") ? ccTocBtn() : null;
+      var exBtn2 = link.closest(".explorer-content")
+        ? document.querySelector(".explorer button.desktop-explorer")
+        : null;
+      var b = tocBtn2 || exBtn2;
+      if (b && !b.classList.contains("collapsed")) b.click();
+      if (exBtn2) {
+        var ex2 = document.querySelector(".explorer");
+        if (ex2 && !ex2.classList.contains("collapsed")) exBtn2.click();
+      }
+      ccSync();
+      return;
+    }
+  }
   ccCloseDrawers(e.target);
   ccSync();
 });
