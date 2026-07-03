@@ -66,13 +66,35 @@ figure[data-rehype-pretty-code-figure] > pre {
 }
 
 :root[saved-theme="dark"] figure[data-rehype-pretty-code-figure] > pre {
-  background-color: #1d2126;
+  background-color: #21262c;
 }
 
-// Ссылки: тонкое подчёркивание с отступом
+// Ссылки: тонкое приглушённое подчёркивание, полный акцент по ховеру —
+// в статьях много ссылок, сплошной яркий акцент заливает текст
 .center a {
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+// Иконка внешней ссылки — тише и меньше
+a.external .external-icon {
+  opacity: 0.5;
+  width: 0.65em;
+  height: 0.65em;
+}
+
+// Колауты: монохром — прозрачный фон, hairline-рамка, цвет типа
+// остаётся только в левой кромке, заголовке и иконке
+.callout {
+  background-color: transparent;
+  border: 1px solid var(--lightgray);
+  border-left: 3px solid var(--color, var(--secondary));
+  border-radius: 4px;
 }
 
 // Футер: линейка сверху, mono, мелко
