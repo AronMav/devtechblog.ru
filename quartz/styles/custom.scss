@@ -23,11 +23,6 @@
 
   a {
     color: var(--dark);
-
-    &::after {
-      content: " ▪"; // фирменная тёплая точка
-      color: var(--accent-warm);
-    }
   }
 }
 
@@ -356,19 +351,6 @@ footer {
       color: var(--secondary);
     }
 
-    // подсказка хоткея — поиск слушает Ctrl/⌘+K
-    @media all and (min-width: 1024px) {
-      &::after {
-        content: "ctrl k";
-        font-size: 0.6rem;
-        letter-spacing: 0.06em;
-        color: var(--gray);
-        border: 1px solid var(--lightgray);
-        border-radius: 3px;
-        padding: 0.1rem 0.3rem;
-        margin-left: 0.15rem;
-      }
-    }
   }
 }
 
