@@ -269,6 +269,14 @@ body:not([data-slug="index"]) .recent-notes {
     font-size: 0.72rem;
     color: var(--gray);
   }
+
+  // Служебные страницы в списке не показываем (у плагина нет фильтра
+  // на уровне конфига): сама главная, 404, индекс тегов
+  li:has(> a[href="./"]),
+  li:has(> a[href="./404"]),
+  li:has(> a[href="./tags/"]) {
+    display: none;
+  }
 }
 
 button.darkmode {
