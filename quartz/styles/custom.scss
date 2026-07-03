@@ -177,6 +177,14 @@ footer {
       "grid-footer";
   }
 
+  // База назначает grid-area на article ВНУТРИ .center, а сам .center
+  // остаётся auto-placed — и проваливается в пустой ряд grid-header,
+  // из-за чего правая колонка (оглавление) оказывалась ПОД статьёй.
+  // Явная область чинит вертикальное выравнивание.
+  .center {
+    grid-area: grid-center;
+  }
+
   // Сайдбар-колонку превращаем в горизонтальный бар с линейкой
   .sidebar.left {
     position: static;
@@ -187,6 +195,25 @@ footer {
     gap: 1.5rem;
     padding: 1.1rem 0 1rem 0;
     border-bottom: 1px solid var(--lightgray);
+
+    // На узких экранах бар не должен распирать страницу:
+    // разрешаем перенос и ужимаем зазоры
+    @media all and ($mobile) {
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      padding: 0.9rem 0 0.8rem;
+    }
+  }
+}
+
+// На мобиле у поиска остаётся только лупа — слово не влезает в бар
+@media all and ($mobile) {
+  .search .search-button p {
+    display: none;
+  }
+
+  .nav-links {
+    gap: 0.9rem;
   }
 }
 
@@ -250,6 +277,27 @@ footer {
     &:focus-visible {
       color: var(--secondary);
     }
+  }
+}
+
+// Дерево разделов (explorer) — только на главной, под карточками.
+// Скрытие обычным селектором, без :has — работает в любом браузере.
+body:not([data-slug="index"]) .explorer {
+  display: none;
+}
+
+body[data-slug="index"] .explorer {
+  margin-top: 2.2rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--lightgray);
+
+  // Кнопка-заголовок «Проводник» — как mono-заголовок раздела
+  button.explorer-toggle {
+    font-family: var(--codeFont);
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
   }
 }
 
