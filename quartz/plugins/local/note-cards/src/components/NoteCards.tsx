@@ -51,8 +51,8 @@ const NoteCards: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponent
         const desc = (page.description ?? "").trim();
         return (
           <a class="note-card" href={`./${page.slug}`}>
-            <h3>{title}</h3>
             {date && <span class="note-card-date">{formatDate(date, locale)}</span>}
+            <h3>{title}</h3>
             {desc.length > 0 && <p>{desc}</p>}
           </a>
         );

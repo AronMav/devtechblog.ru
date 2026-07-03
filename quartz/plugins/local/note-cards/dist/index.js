@@ -44,8 +44,8 @@ var NoteCards = ({ fileData, allFiles, cfg }) => {
     const date = pageDate(page);
     const desc = (page.description ?? "").trim();
     return /* @__PURE__ */ u2("a", { class: "note-card", href: `./${page.slug}`, children: [
-      /* @__PURE__ */ u2("h3", { children: title }),
       date && /* @__PURE__ */ u2("span", { class: "note-card-date", children: formatDate(date, locale) }),
+      /* @__PURE__ */ u2("h3", { children: title }),
       desc.length > 0 && /* @__PURE__ */ u2("p", { children: desc })
     ] });
   }) });
