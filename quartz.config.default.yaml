@@ -101,6 +101,15 @@ plugins:
     order: 92
   - source: github:quartz-community/fonts
     enabled: true
+  - source:
+      name: quartz-themes
+      repo: github:saberzero1/quartz-themes
+      subdir: plugin
+    enabled: true
+    options:
+      theme: border
+      mode: both
+    order: 95
   - source: github:quartz-community/remove-draft
     enabled: true
   - source: github:quartz-community/explicit-publish
