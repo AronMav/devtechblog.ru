@@ -16,10 +16,10 @@ configuration:
     fontOrigin: local
     cdnCaching: false
     typography:
-      title: Segoe UI
-      header: Segoe UI
-      body: Segoe UI
-      code: Cascadia Code
+      title: JetBrains Mono
+      header: JetBrains Mono
+      body: Roboto
+      code: JetBrains Mono
     colors:
       lightMode:
         light: "#F7F8F9"
@@ -115,7 +115,7 @@ plugins:
   - source: github:quartz-community/favicon
     enabled: true
   - source: github:quartz-community/og-image
-    enabled: false
+    enabled: true
   - source: github:quartz-community/cname
     enabled: true
   - source: github:quartz-community/canvas-page
