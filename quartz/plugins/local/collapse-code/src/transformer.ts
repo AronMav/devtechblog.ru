@@ -1,6 +1,7 @@
 import type { QuartzTransformerPlugin } from "@quartz-community/types";
 import { remarkCollapseMarker } from "./marker";
 import { rehypeCollapseWrap } from "./wrap";
+import { COLLAPSE_CSS } from "./styles";
 
 export const CollapseCode: QuartzTransformerPlugin = () => {
   return {
@@ -10,6 +11,12 @@ export const CollapseCode: QuartzTransformerPlugin = () => {
     },
     htmlPlugins() {
       return [rehypeCollapseWrap];
+    },
+    externalResources() {
+      return {
+        css: [{ content: COLLAPSE_CSS, inline: true }],
+        js: [],
+      };
     },
   };
 };
