@@ -271,10 +271,22 @@ body:not([data-slug="index"]) .recent-notes {
   }
 
   // Служебные страницы в списке не показываем (у плагина нет фильтра
-  // на уровне конфига): сама главная, 404, индекс тегов
-  li:has(> a[href="./"]),
-  li:has(> a[href="./404"]),
-  li:has(> a[href="./tags/"]) {
+  // на уровне конфига): сама главная, 404, индекс тегов. Ссылка лежит
+  // глубоко внутри li (.section > .desc > h3 > a) — селектор по потомку.
+  li:has(a[href="./"]),
+  li:has(a[href="./404"]),
+  li:has(a[href="./tags/"]) {
+    display: none;
+  }
+}
+
+// Главная — просто список статей: без заголовка страницы, разделителя
+// и шапки «Недавние заметки»
+body[data-slug="index"] {
+  .article-title,
+  .content-meta,
+  .center > hr,
+  .recent-notes > h3 {
     display: none;
   }
 }
