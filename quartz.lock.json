@@ -49,6 +49,12 @@
       "commit": "ec4c81c91da13a6f6c2cbe1656daf5c14575dab3",
       "installedAt": "2026-06-03T13:16:37.301Z"
     },
+    "collapse-code": {
+      "source": "./quartz/plugins/local/collapse-code",
+      "resolved": "D:\\GIT\\devtechblog.ru\\quartz\\plugins\\local\\collapse-code",
+      "commit": "local",
+      "installedAt": "2026-07-03T07:21:43.820Z"
+    },
     "comments": {
       "source": "github:quartz-community/comments",
       "resolved": "https://github.com/quartz-community/comments.git",

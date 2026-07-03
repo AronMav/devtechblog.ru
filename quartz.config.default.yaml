@@ -263,6 +263,10 @@ plugins:
       position: afterBody
       priority: 50
       display: all
+  - source: ./quartz/plugins/local/collapse-code
+    enabled: true
+    options: {}
+    order: 95
 layout:
   groups:
     toolbar:
