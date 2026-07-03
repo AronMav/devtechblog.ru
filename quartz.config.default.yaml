@@ -202,10 +202,11 @@ plugins:
         RSS: /index.xml
         Sitemap: /sitemap.xml
   - source: github:quartz-community/recent-notes
+    enabled: false
+  - source: ./quartz/plugins/local/note-cards
     enabled: true
-    options:
-      limit: 10
-      linkToMore: false
+    options: {}
+    order: 50
     layout:
       position: afterBody
       priority: 10

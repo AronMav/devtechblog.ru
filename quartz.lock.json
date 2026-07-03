@@ -175,6 +175,12 @@
       "commit": "local",
       "installedAt": "2026-07-03T13:18:01.133Z"
     },
+    "note-cards": {
+      "source": "./quartz/plugins/local/note-cards",
+      "resolved": "D:\\GIT\\devtechblog.ru\\quartz\\plugins\\local\\note-cards",
+      "commit": "local",
+      "installedAt": "2026-07-03T13:57:39.414Z"
+    },
     "note-properties": {
       "source": "github:quartz-community/note-properties",
       "resolved": "https://github.com/quartz-community/note-properties.git",
