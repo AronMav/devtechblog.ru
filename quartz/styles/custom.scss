@@ -1,3 +1,86 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// ─── Инженерный монохром ────────────────────────────────────────────
+// Спека: docs/superpowers/specs/2026-07-03-redesign-monochrome-design.md
+
+// Шрифты: системные стеки, ноль веб-шрифтов (fontOrigin: local в конфиге)
+:root {
+  --titleFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
+  --headerFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
+  --bodyFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
+  --codeFont: "Cascadia Code", ui-monospace, "JetBrains Mono", Consolas, monospace;
+}
+
+// Шапка сайта: mono, капс, разрядка; линейка под шапкой
+.page-title {
+  font-family: var(--codeFont);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  a {
+    color: var(--dark);
+  }
+}
+
+.page-header {
+  border-bottom: 1px solid var(--lightgray);
+  padding-bottom: 0.8rem;
+}
+
+// Хлебные крошки — mono-«бровка» над заголовком
+.breadcrumb-container {
+  font-family: var(--codeFont);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  .breadcrumb-element p {
+    color: var(--gray);
+  }
+}
+
+// Меты статьи (дата, время чтения): mono, приглушённо
+.content-meta {
+  font-family: var(--codeFont);
+  font-size: 0.74rem;
+  color: var(--gray);
+}
+
+// Заголовки
+h1 {
+  text-wrap: balance;
+  font-weight: 700;
+}
+
+article h2,
+.center h2 {
+  border-bottom: 1px solid var(--lightgray);
+  padding-bottom: 0.4rem;
+}
+
+// Код-блоки: панель на полтона от фона, бордер 1px, радиус ≤ 6px
+figure[data-rehype-pretty-code-figure] > pre {
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  background-color: #eef0f2;
+}
+
+:root[saved-theme="dark"] figure[data-rehype-pretty-code-figure] > pre {
+  background-color: #1d2126;
+}
+
+// Ссылки: тонкое подчёркивание с отступом
+.center a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+// Футер: линейка сверху, mono, мелко
+footer {
+  border-top: 1px solid var(--lightgray);
+  padding-top: 0.8rem;
+  font-family: var(--codeFont);
+  font-size: 0.72rem;
+}
