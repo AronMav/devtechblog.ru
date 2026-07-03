@@ -5,7 +5,7 @@ figure.code-collapsible > input.code-collapse-toggle {
 }
 figure.code-collapsible > pre {
   max-height: 11rem;
-  overflow: hidden;
+  overflow-y: hidden;
   transition: max-height 0.2s ease;
 }
 figure.code-collapsible::after {

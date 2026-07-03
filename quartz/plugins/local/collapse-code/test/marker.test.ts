@@ -35,4 +35,16 @@ describe("remarkCollapseMarker", () => {
     const code = tree.children.find((n) => n.type === "code") as any;
     expect(code.meta ?? null).toBe(null);
   });
+
+  it("skips mermaid and no-language blocks so flags align with figures", () => {
+    const md = "```mermaid\ngraph TD; A-->B;\n```\n\n```\nplain\n```\n\n```python collapse\nx = 1\n```\n";
+    const { tree, file } = run(md);
+    // only the python block participates
+    expect(file.data.collapseFlags).toEqual([true]);
+    const python = (tree.children as any[]).find((n) => n.type === "code" && n.lang === "python");
+    expect(python.meta ?? "").not.toContain("collapse");
+    // mermaid/plain code nodes are left untouched (still present, not stripped)
+    const mermaid = (tree.children as any[]).find((n) => n.type === "code" && n.lang === "mermaid");
+    expect(mermaid).toBeTruthy();
+  });
 });
