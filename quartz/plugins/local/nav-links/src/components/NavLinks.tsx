@@ -37,11 +37,45 @@ if (!sessionStorage.getItem("explorerScrollTop")) {
 NavLinks.afterDOMLoaded = `
 var ccNarrow = window.matchMedia("(max-width: 1279px)");
 
+function ccTocBtn() { return document.querySelector(".toc button.toc-header"); }
+
+// Синхронизирует вспомогательные классы: .toc.open (для бэкдропа —
+// сток держит состояние на кнопке) и блокировку скролла фона.
+function ccSync() {
+  var ex = document.querySelector(".explorer");
+  var exOpen = ex && !ex.classList.contains("collapsed");
+  var tb = ccTocBtn();
+  var tocOpen = tb && !tb.classList.contains("collapsed");
+  var toc = tb && tb.closest(".toc");
+  if (toc) toc.classList.toggle("open", !!tocOpen);
+  document.body.classList.toggle("cc-drawer-open", ccNarrow.matches && !!(exOpen || tocOpen));
+}
+
+// Крестик закрытия внутри панели (на телефоне панель накрывает
+// собственную кнопку-тогглер — закрыть иначе нечем).
+function ccEnsureClose(panel, toggler) {
+  if (!panel || panel.querySelector(".cc-panel-close")) return;
+  var b = document.createElement("button");
+  b.className = "cc-panel-close";
+  b.setAttribute("aria-label", "Закрыть");
+  b.textContent = "✕";
+  b.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var t = toggler();
+    if (t) t.click();
+    ccSync();
+  });
+  panel.prepend(b);
+}
+
 function ccPrepareDrawers() {
   if (!ccNarrow.matches) return;
   document.querySelectorAll(".explorer").forEach(function (ex) {
     ex.classList.add("collapsed", "js-ready");
     ex.setAttribute("aria-expanded", "false");
+    ccEnsureClose(ex.querySelector(".explorer-content"), function () {
+      return ex.querySelector("button.desktop-explorer");
+    });
   });
   document.querySelectorAll(".toc").forEach(function (toc) {
     var btn = toc.querySelector("button.toc-header");
@@ -50,28 +84,40 @@ function ccPrepareDrawers() {
       btn.classList.add("collapsed");
       btn.setAttribute("aria-expanded", "false");
     }
-    if (content) content.classList.add("collapsed");
+    if (content) {
+      content.classList.add("collapsed");
+      ccEnsureClose(content, function () { return toc.querySelector("button.toc-header"); });
+    }
     toc.classList.add("js-ready");
   });
+  ccSync();
 }
 
 function ccCloseDrawers(target) {
   if (!ccNarrow.matches) return;
   var ex = document.querySelector(".explorer");
-  if (ex && !ex.classList.contains("collapsed") && !(target && ex.contains(target))) {
+  if (ex && !ex.classList.contains("collapsed")) {
+    var exContent = ex.querySelector(".explorer-content");
     var exBtn = ex.querySelector("button.desktop-explorer");
-    if (exBtn) exBtn.click();
+    var inside = target && ((exContent && exContent.contains(target)) || (exBtn && exBtn.contains(target)));
+    if (!inside && exBtn) exBtn.click();
   }
-  var tocBtn = document.querySelector(".toc button.toc-header");
+  var tocBtn = ccTocBtn();
   if (tocBtn && !tocBtn.classList.contains("collapsed")) {
     var toc = tocBtn.closest(".toc");
-    if (!(target && toc && toc.contains(target))) tocBtn.click();
+    var tc = toc && toc.querySelector(".toc-content");
+    var insideToc = target && ((tc && tc.contains(target)) || tocBtn.contains(target));
+    if (!insideToc) tocBtn.click();
   }
+  ccSync();
 }
 
 ccPrepareDrawers();
 document.addEventListener("nav", ccPrepareDrawers);
-document.addEventListener("click", function (e) { ccCloseDrawers(e.target); });
+document.addEventListener("click", function (e) {
+  ccCloseDrawers(e.target);
+  ccSync();
+});
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") ccCloseDrawers(null);
 });

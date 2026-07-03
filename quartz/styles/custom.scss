@@ -476,9 +476,55 @@ footer {
     }
   }
 
-  // стоковый скролл-лок мобильного оверлея не нужен
+  // стоковый скролл-лок мобильного оверлея не нужен (свой — ниже)
   html.mobile-no-scroll {
     overflow: auto;
+  }
+
+  // Затемняющий бэкдроп за панелью: тап по нему закрывает (логика в
+  // nav-links — клик вне контента панели). Псевдоэлемент корня.
+  .explorer:not(.collapsed)::before,
+  .toc.open::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 16, 20, 0.45);
+    z-index: 89;
+  }
+
+  // Крестик закрытия в панели (создаётся скриптом nav-links)
+  .cc-panel-close {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.8rem;
+    background: none;
+    border: none;
+    padding: 0.3rem;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--gray);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+
+  .explorer .explorer-content,
+  .toc .toc-content {
+    // якорь для абсолютного крестика
+    position: fixed; // уже fixed — оставляем, крестик позиционируется от панели
+  }
+
+  // Панель оглавления: крестик слева (панель выезжает справа)
+  .toc .toc-content .cc-panel-close {
+    right: auto;
+    left: 0.8rem;
+  }
+
+  // Пока открыта любая панель — фон не скроллится
+  body.cc-drawer-open {
+    overflow: hidden;
   }
 }
 

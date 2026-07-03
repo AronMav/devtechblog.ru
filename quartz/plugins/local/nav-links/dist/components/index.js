@@ -43,11 +43,45 @@ if (!sessionStorage.getItem("explorerScrollTop")) {
 NavLinks.afterDOMLoaded = `
 var ccNarrow = window.matchMedia("(max-width: 1279px)");
 
+function ccTocBtn() { return document.querySelector(".toc button.toc-header"); }
+
+// \u0421\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0438\u0440\u0443\u0435\u0442 \u0432\u0441\u043F\u043E\u043C\u043E\u0433\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u043A\u043B\u0430\u0441\u0441\u044B: .toc.open (\u0434\u043B\u044F \u0431\u044D\u043A\u0434\u0440\u043E\u043F\u0430 \u2014
+// \u0441\u0442\u043E\u043A \u0434\u0435\u0440\u0436\u0438\u0442 \u0441\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0435) \u0438 \u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u043A\u0443 \u0441\u043A\u0440\u043E\u043B\u043B\u0430 \u0444\u043E\u043D\u0430.
+function ccSync() {
+  var ex = document.querySelector(".explorer");
+  var exOpen = ex && !ex.classList.contains("collapsed");
+  var tb = ccTocBtn();
+  var tocOpen = tb && !tb.classList.contains("collapsed");
+  var toc = tb && tb.closest(".toc");
+  if (toc) toc.classList.toggle("open", !!tocOpen);
+  document.body.classList.toggle("cc-drawer-open", ccNarrow.matches && !!(exOpen || tocOpen));
+}
+
+// \u041A\u0440\u0435\u0441\u0442\u0438\u043A \u0437\u0430\u043A\u0440\u044B\u0442\u0438\u044F \u0432\u043D\u0443\u0442\u0440\u0438 \u043F\u0430\u043D\u0435\u043B\u0438 (\u043D\u0430 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0435 \u043F\u0430\u043D\u0435\u043B\u044C \u043D\u0430\u043A\u0440\u044B\u0432\u0430\u0435\u0442
+// \u0441\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u0443\u044E \u043A\u043D\u043E\u043F\u043A\u0443-\u0442\u043E\u0433\u0433\u043B\u0435\u0440 \u2014 \u0437\u0430\u043A\u0440\u044B\u0442\u044C \u0438\u043D\u0430\u0447\u0435 \u043D\u0435\u0447\u0435\u043C).
+function ccEnsureClose(panel, toggler) {
+  if (!panel || panel.querySelector(".cc-panel-close")) return;
+  var b = document.createElement("button");
+  b.className = "cc-panel-close";
+  b.setAttribute("aria-label", "\u0417\u0430\u043A\u0440\u044B\u0442\u044C");
+  b.textContent = "\u2715";
+  b.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var t = toggler();
+    if (t) t.click();
+    ccSync();
+  });
+  panel.prepend(b);
+}
+
 function ccPrepareDrawers() {
   if (!ccNarrow.matches) return;
   document.querySelectorAll(".explorer").forEach(function (ex) {
     ex.classList.add("collapsed", "js-ready");
     ex.setAttribute("aria-expanded", "false");
+    ccEnsureClose(ex.querySelector(".explorer-content"), function () {
+      return ex.querySelector("button.desktop-explorer");
+    });
   });
   document.querySelectorAll(".toc").forEach(function (toc) {
     var btn = toc.querySelector("button.toc-header");
@@ -56,28 +90,40 @@ function ccPrepareDrawers() {
       btn.classList.add("collapsed");
       btn.setAttribute("aria-expanded", "false");
     }
-    if (content) content.classList.add("collapsed");
+    if (content) {
+      content.classList.add("collapsed");
+      ccEnsureClose(content, function () { return toc.querySelector("button.toc-header"); });
+    }
     toc.classList.add("js-ready");
   });
+  ccSync();
 }
 
 function ccCloseDrawers(target) {
   if (!ccNarrow.matches) return;
   var ex = document.querySelector(".explorer");
-  if (ex && !ex.classList.contains("collapsed") && !(target && ex.contains(target))) {
+  if (ex && !ex.classList.contains("collapsed")) {
+    var exContent = ex.querySelector(".explorer-content");
     var exBtn = ex.querySelector("button.desktop-explorer");
-    if (exBtn) exBtn.click();
+    var inside = target && ((exContent && exContent.contains(target)) || (exBtn && exBtn.contains(target)));
+    if (!inside && exBtn) exBtn.click();
   }
-  var tocBtn = document.querySelector(".toc button.toc-header");
+  var tocBtn = ccTocBtn();
   if (tocBtn && !tocBtn.classList.contains("collapsed")) {
     var toc = tocBtn.closest(".toc");
-    if (!(target && toc && toc.contains(target))) tocBtn.click();
+    var tc = toc && toc.querySelector(".toc-content");
+    var insideToc = target && ((tc && tc.contains(target)) || tocBtn.contains(target));
+    if (!insideToc) tocBtn.click();
   }
+  ccSync();
 }
 
 ccPrepareDrawers();
 document.addEventListener("nav", ccPrepareDrawers);
-document.addEventListener("click", function (e) { ccCloseDrawers(e.target); });
+document.addEventListener("click", function (e) {
+  ccCloseDrawers(e.target);
+  ccSync();
+});
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") ccCloseDrawers(null);
 });
