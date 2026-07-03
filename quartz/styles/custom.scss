@@ -5,6 +5,7 @@
 
 // Шрифты: системные стеки, ноль веб-шрифтов (fontOrigin: local в конфиге)
 :root {
+  --panel-bg: #eef0f2; // приподнятая поверхность (панели, код)
   --titleFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --headerFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --bodyFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
@@ -63,6 +64,10 @@ figure[data-rehype-pretty-code-figure] > pre {
   border: 1px solid var(--lightgray);
   border-radius: 6px;
   background-color: #eef0f2;
+}
+
+:root[saved-theme="dark"] {
+  --panel-bg: #21262c;
 }
 
 :root[saved-theme="dark"] figure[data-rehype-pretty-code-figure] > pre {
@@ -428,9 +433,9 @@ footer {
     bottom: 0;
     left: 0;
     width: min(320px, 85vw);
-    background-color: var(--light);
+    background-color: var(--panel-bg, var(--light));
     border-right: 1px solid var(--lightgray);
-    padding: 1.4rem 1.2rem;
+    padding: 3rem 1.2rem 1.4rem; // верх — зона крестика
     overflow-y: auto;
     z-index: 90;
     transform: translateX(-105%);
@@ -452,9 +457,9 @@ footer {
     bottom: 0;
     right: 0;
     width: min(320px, 85vw);
-    background-color: var(--light);
+    background-color: var(--panel-bg, var(--light));
     border-left: 1px solid var(--lightgray);
-    padding: 1.4rem 1.2rem;
+    padding: 3rem 1.2rem 1.4rem;
     overflow-y: auto;
     z-index: 90;
     transform: translateX(105%);
