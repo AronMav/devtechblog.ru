@@ -402,6 +402,7 @@ footer {
     margin-top: 0.9rem;
     padding: 0;
     justify-self: end;
+    overflow: visible; // база даёт overflow-x:auto — рисовало пустой скроллбар у кнопки
   }
 
   // Кнопки-триггеры — тихие mono, как элементы бара
