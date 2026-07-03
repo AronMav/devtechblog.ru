@@ -30,4 +30,19 @@ if (!sessionStorage.getItem("explorerScrollTop")) {
 }
 `;
 
+// На узких экранах (<1280) дерево разделов — полоса-аккордеон:
+// по умолчанию свёрнута. Разворачивает штатная кнопка explorer'а
+// (она тогглит класс collapsed), вид задаёт custom.scss.
+NavLinks.afterDOMLoaded = `
+function collapseTreeOnNarrow() {
+  if (!window.matchMedia("(max-width: 1279px)").matches) return;
+  document.querySelectorAll(".explorer:not(.collapsed)").forEach(function (ex) {
+    ex.classList.add("collapsed");
+    ex.setAttribute("aria-expanded", "false");
+  });
+}
+collapseTreeOnNarrow();
+document.addEventListener("nav", collapseTreeOnNarrow);
+`;
+
 export default (() => NavLinks) satisfies QuartzComponentConstructor;

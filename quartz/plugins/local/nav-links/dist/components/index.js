@@ -40,6 +40,17 @@ if (!sessionStorage.getItem("explorerScrollTop")) {
   sessionStorage.setItem("explorerScrollTop", "0");
 }
 `;
+NavLinks.afterDOMLoaded = `
+function collapseTreeOnNarrow() {
+  if (!window.matchMedia("(max-width: 1279px)").matches) return;
+  document.querySelectorAll(".explorer:not(.collapsed)").forEach(function (ex) {
+    ex.classList.add("collapsed");
+    ex.setAttribute("aria-expanded", "false");
+  });
+}
+collapseTreeOnNarrow();
+document.addEventListener("nav", collapseTreeOnNarrow);
+`;
 var NavLinks_default = (() => NavLinks);
 
 export { NavLinks_default as NavLinks };

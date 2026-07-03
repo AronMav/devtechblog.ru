@@ -363,12 +363,57 @@ footer {
   }
 }
 
-// 1024–1280: дерево и оглавление в одной правой колонке, разделены
-@media all and ($desktop) and (max-width: 1279px) {
+// <1280: дерево — сворачиваемая полоса «РАЗДЕЛЫ ›» между баром и
+// контентом (зона grid-header пустует — page-header живёт внутри
+// .center). Правая обёртка растворяется, оглавление остаётся в своей
+// области после контента. Стоковые оверлей/скролл-лок глушим.
+@media all and (max-width: 1279px) {
+  .sidebar.right {
+    display: contents;
+  }
+
+  .sidebar.right > .explorer {
+    grid-area: grid-header;
+    margin-top: 1.1rem;
+    border: 1px solid var(--lightgray);
+    border-radius: 6px;
+    padding: 0.55rem 0.95rem;
+    flex: none;
+  }
+
+  .explorer .explorer-content {
+    position: static;
+    transform: none;
+  }
+
+  .explorer.collapsed .explorer-content {
+    display: none;
+  }
+
+  .explorer:not(.collapsed) .explorer-content {
+    display: block;
+    padding-top: 0.6rem;
+  }
+
+  // одна кнопка-полоса на всех ширинах; стоковый мобильный оверлей не нужен
+  .explorer button.mobile-explorer {
+    display: none;
+  }
+
+  .explorer button.desktop-explorer {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  html.mobile-no-scroll {
+    overflow: auto;
+  }
+
   .sidebar.right > .toc {
-    margin-top: 1.6rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid var(--lightgray);
+    grid-area: grid-sidebar-right;
+    margin-top: 1.4rem;
   }
 }
 
@@ -501,7 +546,7 @@ body[data-slug="index"] {
         "grid-footer";
     }
 
-    .sidebar.right {
+    .sidebar.right > .toc {
       display: none;
     }
   }
