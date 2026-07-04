@@ -49,6 +49,21 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
+      # actions/deploy-pages иногда отдаёт транзиентную ошибку
+      # "Deployment failed, try again later" на стороне GitHub Pages, хотя
+      # артефакт сборки уже готов. Раньше это чинилось ручным пустым коммитом
+      # "redeliver Pages deployment". Теперь workflow сам дожимает деплой:
+      # первая попытка не роняет job, а вторая (и третья) повторяют её.
+      - name: Deploy to GitHub Pages (attempt 1)
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages (attempt 2)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages (attempt 3)
+        id: deployment_retry2
+        if: steps.deployment.outcome == 'failure' && steps.deployment_retry.outcome == 'failure'
         uses: actions/deploy-pages@v4
