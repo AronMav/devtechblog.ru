@@ -23,6 +23,18 @@
 
   a {
     color: var(--dark);
+    // Иконка сайта (тот же favicon) слева от названия
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: "";
+      flex: none;
+      width: 1.5em;
+      height: 1.5em;
+      background: url("/favicon.ico") center / contain no-repeat;
+    }
   }
 }
 
