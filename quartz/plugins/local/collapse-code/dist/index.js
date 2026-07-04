@@ -277,23 +277,47 @@ figure.code-collapsible::after {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 5rem;
-  background: linear-gradient(to bottom, transparent, var(--light));
+  background: linear-gradient(to bottom, transparent, var(--panel-bg));
   pointer-events: none;
+  border-radius: 0 0 6px 6px;
 }
+/* \u0422\u0438\u0445\u0438\u0439 mono-\u0447\u0438\u043F \u0432 \u0441\u0442\u0438\u043B\u0435 \u0431\u0430\u0440\u0430/\u0431\u0435\u0439\u0434\u0436\u0435\u0439 \u043A\u043E\u0434\u0430: hairline-\u0440\u0430\u043C\u043A\u0430, \u0441\u0435\u0440\u044B\u0439 \u0432 \u043F\u043E\u043A\u043E\u0435,
+   \u0430\u043A\u0446\u0435\u043D\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u043E \u0445\u043E\u0432\u0435\u0440\u0443. \u0428\u0435\u0432\u0440\u043E\u043D-\u0438\u043D\u0434\u0438\u043A\u0430\u0442\u043E\u0440 \u043F\u043E\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u043F\u0440\u0438 \u0440\u0430\u0437\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u043D\u0438\u0438. */
 figure.code-collapsible > label.code-collapse-label {
   position: absolute;
-  bottom: 0.6rem;
+  bottom: 0.7rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
   cursor: pointer;
-  padding: 0.25rem 0.9rem;
-  border-radius: 0.5rem;
-  background: var(--secondary);
-  color: var(--light);
-  font-size: 0.8rem;
-  font-family: var(--bodyFont);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  background: var(--panel-bg);
+  color: var(--gray);
+  font-family: var(--codeFont);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   user-select: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+figure.code-collapsible > label.code-collapse-label:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
+figure.code-collapsible > label.code-collapse-label::after {
+  content: "";
+  width: 0.4em;
+  height: 0.4em;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  margin-top: -0.18em;
+  transition: transform 0.2s ease;
 }
 figure.code-collapsible > label.code-collapse-label .cc-label-hide { display: none; }
 /* expanded */
@@ -301,10 +325,14 @@ figure.code-collapsible:has(> input.code-collapse-toggle:checked) > pre { max-he
 figure.code-collapsible:has(> input.code-collapse-toggle:checked)::after { display: none; }
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label.code-collapse-label {
   position: static;
-  display: block;
+  display: inline-flex;
   width: fit-content;
-  margin: 0.5rem auto 0;
+  margin: 0.6rem auto 0;
   transform: none;
+}
+figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label.code-collapse-label::after {
+  transform: rotate(-135deg);
+  margin-top: 0.12em;
 }
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label .cc-label-show { display: none; }
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label .cc-label-hide { display: inline; }
