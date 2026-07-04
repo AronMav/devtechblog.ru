@@ -41,7 +41,7 @@ export function rehypeCollapseWrap() {
       node.children.push(
         el("input", { type: "checkbox", id, className: ["code-collapse-toggle"], hidden: true }),
         el("label", { htmlFor: id, className: ["code-collapse-label"] }, [
-          el("span", { className: ["cc-label-show"] }, [{ type: "text", value: "Развернуть код" }]),
+          el("span", { className: ["cc-label-show"] }, [{ type: "text", value: "Развернуть" }]),
           el("span", { className: ["cc-label-hide"] }, [{ type: "text", value: "Свернуть" }]),
         ]),
       );

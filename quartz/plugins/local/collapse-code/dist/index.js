@@ -253,7 +253,7 @@ function rehypeCollapseWrap() {
       node.children.push(
         el("input", { type: "checkbox", id, className: ["code-collapse-toggle"], hidden: true }),
         el("label", { htmlFor: id, className: ["code-collapse-label"] }, [
-          el("span", { className: ["cc-label-show"] }, [{ type: "text", value: "\u0420\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u043A\u043E\u0434" }]),
+          el("span", { className: ["cc-label-show"] }, [{ type: "text", value: "\u0420\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C" }]),
           el("span", { className: ["cc-label-hide"] }, [{ type: "text", value: "\u0421\u0432\u0435\u0440\u043D\u0443\u0442\u044C" }])
         ])
       );
