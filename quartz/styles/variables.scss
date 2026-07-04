@@ -7,9 +7,11 @@
  * Screen width between $mobile and $desktop width will use the tablet layout.
  * assuming mobile < desktop
  */
+// desktop: 1024px (было 1200px) — при масштабе Windows 125% окно легко
+// уходило ниже порога, и оглавление падало под статью
 $breakpoints: (
   mobile: 800px,
-  desktop: 1200px,
+  desktop: 1024px,
 );
 
 $mobile: "(max-width: #{map.get($breakpoints, mobile)})";
