@@ -332,11 +332,8 @@ figure.code-collapsible > label.code-collapse-label .cc-label-hide { display: no
 /* expanded */
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > pre { max-height: none; }
 figure.code-collapsible:has(> input.code-collapse-toggle:checked)::after { display: none; }
-figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label.code-collapse-label {
-  position: static;
-  margin: 0.6rem 0 0 auto;
-  transform: none;
-}
+/* \u0420\u0430\u0437\u0432\u0451\u0440\u043D\u0443\u0442\u043E: \u043A\u043D\u043E\u043F\u043A\u0430 \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F \u0432 \u043F\u0440\u0430\u0432\u043E\u043C \u043D\u0438\u0436\u043D\u0435\u043C \u0443\u0433\u043B\u0443 \u043E\u043A\u043D\u0430 \u043A\u043E\u0434\u0430 (\u0442\u0430 \u0436\u0435
+   \u043F\u043E\u0437\u0438\u0446\u0438\u044F, \u0447\u0442\u043E \xAB\u0440\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C\xBB) \u2014 \u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0441\u0442\u0440\u0435\u043B\u043A\u0438. */
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label.code-collapse-label::after {
   transform: rotate(-135deg);
   margin-top: 0.12em;

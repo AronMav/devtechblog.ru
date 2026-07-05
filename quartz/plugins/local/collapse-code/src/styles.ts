@@ -68,11 +68,8 @@ figure.code-collapsible > label.code-collapse-label .cc-label-hide { display: no
 /* expanded */
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > pre { max-height: none; }
 figure.code-collapsible:has(> input.code-collapse-toggle:checked)::after { display: none; }
-figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label.code-collapse-label {
-  position: static;
-  margin: 0.6rem 0 0 auto;
-  transform: none;
-}
+/* Развёрнуто: кнопка остаётся в правом нижнем углу окна кода (та же
+   позиция, что «развернуть») — меняется только направление стрелки. */
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label.code-collapse-label::after {
   transform: rotate(-135deg);
   margin-top: 0.12em;
