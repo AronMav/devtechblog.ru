@@ -79,6 +79,13 @@ figure[data-rehype-pretty-code-figure] > pre {
   background-color: var(--panel-bg);
 }
 
+// Кнопка копирования: показываем всегда (плагин прячет её до ховера) и
+// убираем рамку — заодно единообразно с кнопкой сворачивания кода
+pre > .clipboard-button {
+  opacity: 1;
+  border: none;
+}
+
 :root[saved-theme="dark"] {
   --panel-bg: #21262c;
 }

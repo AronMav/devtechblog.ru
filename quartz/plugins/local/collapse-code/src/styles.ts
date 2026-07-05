@@ -32,14 +32,14 @@ figure.code-collapsible > label.code-collapse-label {
   padding: 0.4rem;
   margin: 0.3rem;
   color: var(--gray);
-  border: 1px solid var(--dark);
+  border: none;
   background-color: var(--light);
   border-radius: 5px;
   cursor: pointer;
   transition: 0.2s;
 }
 figure.code-collapsible > label.code-collapse-label:hover {
-  border-color: var(--secondary);
+  color: var(--secondary);
 }
 figure.code-collapsible > label.code-collapse-label > svg.cc-chevron {
   display: block;
