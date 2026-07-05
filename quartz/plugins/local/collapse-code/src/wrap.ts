@@ -41,6 +41,26 @@ export function rehypeCollapseWrap() {
       node.children.push(
         el("input", { type: "checkbox", id, className: ["code-collapse-toggle"], hidden: true }),
         el("label", { htmlFor: id, className: ["code-collapse-label"] }, [
+          el(
+            "svg",
+            {
+              className: ["cc-chevron"],
+              ariaHidden: "true",
+              width: 16,
+              height: 16,
+              viewBox: "0 0 16 16",
+              fill: "none",
+            },
+            [
+              el("path", {
+                d: "M4 6l4 4 4-4",
+                stroke: "currentColor",
+                strokeWidth: 1.5,
+                strokeLinecap: "round",
+                strokeLinejoin: "round",
+              }),
+            ],
+          ),
           el("span", { className: ["cc-label-show"] }, [{ type: "text", value: "Развернуть" }]),
           el("span", { className: ["cc-label-hide"] }, [{ type: "text", value: "Свернуть" }]),
         ]),

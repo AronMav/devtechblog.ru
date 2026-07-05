@@ -253,6 +253,26 @@ function rehypeCollapseWrap() {
       node.children.push(
         el("input", { type: "checkbox", id, className: ["code-collapse-toggle"], hidden: true }),
         el("label", { htmlFor: id, className: ["code-collapse-label"] }, [
+          el(
+            "svg",
+            {
+              className: ["cc-chevron"],
+              ariaHidden: "true",
+              width: 16,
+              height: 16,
+              viewBox: "0 0 16 16",
+              fill: "none"
+            },
+            [
+              el("path", {
+                d: "M4 6l4 4 4-4",
+                stroke: "currentColor",
+                strokeWidth: 1.5,
+                strokeLinecap: "round",
+                strokeLinejoin: "round"
+              })
+            ]
+          ),
           el("span", { className: ["cc-label-show"] }, [{ type: "text", value: "\u0420\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C" }]),
           el("span", { className: ["cc-label-hide"] }, [{ type: "text", value: "\u0421\u0432\u0435\u0440\u043D\u0443\u0442\u044C" }])
         ])
@@ -281,40 +301,36 @@ figure.code-collapsible::after {
   pointer-events: none;
   border-radius: 0 0 6px 6px;
 }
-/* \u041A\u043D\u043E\u043F\u043A\u0430-\u0438\u043A\u043E\u043D\u043A\u0430 \u0432 \u043F\u0440\u0430\u0432\u043E\u043C \u0443\u0433\u043B\u0443: \u0442\u043E\u043B\u044C\u043A\u043E \u0448\u0435\u0432\u0440\u043E\u043D, \u0431\u0435\u0437 \u0442\u0435\u043A\u0441\u0442\u0430. Hairline-\u0447\u0438\u043F
-   \u0432 \u0441\u0442\u0438\u043B\u0435 \u0431\u0435\u0439\u0434\u0436\u0435\u0439 \u043A\u043E\u0434\u0430; \u0441\u0435\u0440\u044B\u0439 \u0432 \u043F\u043E\u043A\u043E\u0435, \u0430\u043A\u0446\u0435\u043D\u0442 \u043F\u043E \u0445\u043E\u0432\u0435\u0440\u0443. \u0428\u0435\u0432\u0440\u043E\u043D \u0432\u043D\u0438\u0437 =
-   \u0440\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C, \u0432\u0432\u0435\u0440\u0445 (\u043F\u0440\u0438 :checked) = \u0441\u0432\u0435\u0440\u043D\u0443\u0442\u044C. */
+/* \u041A\u043D\u043E\u043F\u043A\u0430-\u0441\u0442\u0440\u0435\u043B\u043A\u0430 \u0432 \u043F\u0440\u0430\u0432\u043E\u043C \u043D\u0438\u0436\u043D\u0435\u043C \u0443\u0433\u043B\u0443 \u043E\u043A\u043D\u0430 \u043A\u043E\u0434\u0430 \u2014 \u0442\u043E\u0442 \u0436\u0435 chrome, \u0447\u0442\u043E \u0438
+   \u0443 \u043A\u043D\u043E\u043F\u043A\u0438 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F (.clipboard-button): \u0440\u0430\u043C\u043A\u0430, \u0444\u043E\u043D, \u0440\u0430\u0434\u0438\u0443\u0441, \u043F\u0430\u0434\u0434\u0438\u043D\u0433.
+   \u0421\u0442\u0440\u0435\u043B\u043A\u0430 \u0432\u043D\u0438\u0437 = \u0440\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C, \u043F\u0440\u0438 :checked \u043F\u043E\u0432\u043E\u0440\u043E\u0442 \u043D\u0430 180\xB0 = \u0441\u0432\u0435\u0440\u043D\u0443\u0442\u044C.
+   \u0412 \u043E\u0442\u043B\u0438\u0447\u0438\u0435 \u043E\u0442 \u043A\u043D\u043E\u043F\u043A\u0438 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F, \u0432\u0438\u0434\u043D\u0430 \u0432\u0441\u0435\u0433\u0434\u0430 (\u044D\u0442\u043E affordance). */
 figure.code-collapsible > label.code-collapse-label {
   position: absolute;
-  bottom: 0.7rem;
-  right: 0.7rem;
+  bottom: 0;
+  right: 0;
   z-index: 2;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
-  padding: 0.35rem 0.5rem;
-  border: 1px solid var(--lightgray);
-  border-radius: 6px;
-  background: var(--panel-bg);
+  padding: 0.4rem;
+  margin: 0.3rem;
   color: var(--gray);
-  user-select: none;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  border: 1px solid var(--dark);
+  background-color: var(--light);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 figure.code-collapsible > label.code-collapse-label:hover {
-  color: var(--secondary);
   border-color: var(--secondary);
 }
-figure.code-collapsible > label.code-collapse-label::after {
-  content: "";
-  width: 0.5em;
-  height: 0.5em;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg);
-  margin-top: -0.18em;
+figure.code-collapsible > label.code-collapse-label > svg.cc-chevron {
+  display: block;
   transition: transform 0.2s ease;
+}
+figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label svg.cc-chevron {
+  transform: rotate(180deg);
 }
 /* \u0422\u0435\u043A\u0441\u0442 \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F \u0432 DOM \u0434\u043B\u044F \u0441\u043A\u0440\u0438\u043D\u0440\u0438\u0434\u0435\u0440\u043E\u0432 (\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E\u0435 \u0438\u043C\u044F label), \u043D\u043E \u0441\u043A\u0440\u044B\u0442
    \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u043E \u2014 \u043D\u0430 \u044D\u043A\u0440\u0430\u043D\u0435 \u0442\u043E\u043B\u044C\u043A\u043E \u0441\u0442\u0440\u0435\u043B\u043A\u0430. */
@@ -332,12 +348,6 @@ figure.code-collapsible > label.code-collapse-label .cc-label-hide { display: no
 /* expanded */
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > pre { max-height: none; }
 figure.code-collapsible:has(> input.code-collapse-toggle:checked)::after { display: none; }
-/* \u0420\u0430\u0437\u0432\u0451\u0440\u043D\u0443\u0442\u043E: \u043A\u043D\u043E\u043F\u043A\u0430 \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F \u0432 \u043F\u0440\u0430\u0432\u043E\u043C \u043D\u0438\u0436\u043D\u0435\u043C \u0443\u0433\u043B\u0443 \u043E\u043A\u043D\u0430 \u043A\u043E\u0434\u0430 (\u0442\u0430 \u0436\u0435
-   \u043F\u043E\u0437\u0438\u0446\u0438\u044F, \u0447\u0442\u043E \xAB\u0440\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C\xBB) \u2014 \u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0441\u0442\u0440\u0435\u043B\u043A\u0438. */
-figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label.code-collapse-label::after {
-  transform: rotate(-135deg);
-  margin-top: 0.12em;
-}
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label .cc-label-show { display: none; }
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label .cc-label-hide { display: inline; }
 `;
