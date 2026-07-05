@@ -61,7 +61,7 @@ figure.code-collapsible:has(> input.code-collapse-toggle:checked) > pre { max-he
 figure.code-collapsible:has(> input.code-collapse-toggle:checked)::after { display: none; }
 figure.code-collapsible:has(> input.code-collapse-toggle:checked) > label.code-collapse-label {
   position: static;
-  display: inline-flex;
+  display: flex;
   width: fit-content;
   margin: 0.6rem auto 0;
   transform: none;
