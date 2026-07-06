@@ -10,7 +10,7 @@
   // Фоновая сетка точек: едва видимый «инженерный» трафарет. Цвет —
   // color-mix от --dark, поэтому авто-темируется: в светлой тёмные точки,
   // в тёмной — светлые. Геометрия задаётся на body ниже.
-  --bg-dot: color-mix(in srgb, var(--dark) 5%, transparent);
+  --bg-dot: color-mix(in srgb, var(--dark) 8%, transparent);
   --titleFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --headerFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --bodyFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
