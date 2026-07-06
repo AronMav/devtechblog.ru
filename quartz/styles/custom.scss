@@ -754,6 +754,16 @@ footer {
   body[data-slug="index"] .sidebar.right > .toc {
     display: none;
   }
+
+  // Стоковое сворачивание секций (flex-shrink в flex-колонке сайдбара)
+  // инертно здесь: .sidebar.right растворён через display:contents, и
+  // explorer/toc — прямые grid-дети. Поэтому сворачивание стрелками в
+  // шапке секций делаем явно — прячем контент на ≥1280. На <1280 работают
+  // drawer-панели выше, эту область не трогаем.
+  .sidebar.right > .explorer.collapsed > .explorer-content,
+  .sidebar.right > .toc .toc-content.collapsed {
+    display: none;
+  }
 }
 
 // Карточки статей на главной (плагин note-cards; фильтрация служебных
