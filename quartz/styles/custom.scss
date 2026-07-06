@@ -7,10 +7,22 @@
 :root {
   --panel-bg: #e4e7ea; // приподнятая поверхность (панели, код)
   --accent-warm: #f07000; // фирменный оранж (из favicon): маркер, селекция, бренд-точка
+  // Фоновая сетка точек: едва видимый «инженерный» трафарет. Цвет —
+  // color-mix от --dark, поэтому авто-темируется: в светлой тёмные точки,
+  // в тёмной — светлые. Геометрия задаётся на body ниже.
+  --bg-dot: color-mix(in srgb, var(--dark) 5%, transparent);
   --titleFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --headerFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --bodyFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --codeFont: "Cascadia Code", ui-monospace, "JetBrains Mono", Consolas, monospace;
+}
+
+// Фон страницы: едва видимые точки через равные 24px. Поверх
+// background-color: var(--light) из base.scss, поэтому цвет фона сохранён.
+body {
+  background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
 }
 
 // Шапка сайта: mono, капс, разрядка; линейка под шапкой
