@@ -15,6 +15,16 @@
   --headerFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --bodyFont: "Segoe UI", system-ui, Roboto, Arial, sans-serif;
   --codeFont: "Cascadia Code", ui-monospace, "JetBrains Mono", Consolas, monospace;
+
+  // ─── Phosphor Bold: иконки вместо дефолтного Lucide ───────────────
+  // stroke=%23000 (непрозрачный) — для mask важна только альфа; цвет
+  // иконки даёт background-color: currentColor на самом svg.
+  --ic-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Ccircle cx='112' cy='112' r='80' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='168.57' y1='168.57' x2='224' y2='224' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ic-sun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Ccircle cx='128' cy='128' r='56' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='128' y1='36' x2='128' y2='20' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='60' y1='60' x2='48' y2='48' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='60' y1='196' x2='48' y2='208' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='196' y1='60' x2='208' y2='48' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='196' y1='196' x2='208' y2='208' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='36' y1='128' x2='20' y2='128' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='128' y1='220' x2='128' y2='236' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='220' y1='128' x2='236' y2='128' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ic-moon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M108.11,28.11A96.09,96.09,0,0,0,227.89,147.89,96,96,0,1,1,108.11,28.11Z' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ic-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpolyline points='208 96 128 176 48 96' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ic-external: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cline x1='64' y1='192' x2='192' y2='64' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='88 64 192 64 192 168' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ic-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect x='40' y='88' width='128' height='128' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='168 168 216 168 216 40 88 40 88 88' fill='none' stroke='%23000' stroke-width='24' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 // Фон страницы: едва видимые точки через равные 24px. Поверх
@@ -23,6 +33,70 @@ body {
   background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
   background-size: 24px 24px;
   background-position: 0 0;
+}
+
+// ─── Иконки: Phosphor Bold вместо дефолтного Lucide ──────────────────
+// Плагины (search, darkmode, explorer, toc, clipboard, collapse-code)
+// не правим — у их инлайн-SVG прячем содержимое и красим «коробку» через
+// background + mask с path Phosphor. Цвет = currentColor (наследуется),
+// ховер и переключение темы работают как прежде.
+.search-button svg,
+button.darkmode svg,
+.explorer .fold,
+.toc .fold,
+a.external .external-icon,
+.clipboard-button svg,
+figure.code-collapsible svg.cc-chevron {
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.search-button svg > *,
+button.darkmode svg > *,
+.explorer .fold > *,
+.toc .fold > *,
+a.external .external-icon > *,
+.clipboard-button svg > *,
+figure.code-collapsible svg.cc-chevron > * {
+  display: none;
+}
+
+.search-button svg {
+  -webkit-mask-image: var(--ic-search);
+  mask-image: var(--ic-search);
+}
+button.darkmode .dayIcon {
+  -webkit-mask-image: var(--ic-sun);
+  mask-image: var(--ic-sun);
+}
+button.darkmode .nightIcon {
+  -webkit-mask-image: var(--ic-moon);
+  mask-image: var(--ic-moon);
+}
+.explorer .fold,
+.toc .fold,
+figure.code-collapsible svg.cc-chevron {
+  -webkit-mask-image: var(--ic-caret);
+  mask-image: var(--ic-caret);
+}
+a.external .external-icon {
+  -webkit-mask-image: var(--ic-external);
+  mask-image: var(--ic-external);
+}
+.clipboard-button svg {
+  -webkit-mask-image: var(--ic-copy);
+  mask-image: var(--ic-copy);
+  width: 0.9rem;
+  height: 0.9rem;
+}
+figure.code-collapsible svg.cc-chevron {
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
 // Шапка сайта: mono, капс, разрядка; линейка под шапкой
@@ -361,12 +435,12 @@ footer {
     background: none;
     border: none;
     border-radius: 4px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.45rem;
     padding: 0.3rem 0.5rem;
     width: auto;
-    height: auto;
+    min-height: 1.4rem;
     font-family: var(--codeFont);
     color: var(--gray);
     cursor: pointer;
