@@ -23,7 +23,8 @@
 
   a {
     color: var(--dark);
-    // Иконка сайта (тот же favicon) слева от названия
+    // Бренд-марка: тёплый блок (--accent-warm) — единственная точка тепла
+    // в монохроме. Чёткая CSS-форма вместо мыльного .ico.
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -31,9 +32,10 @@
     &::before {
       content: "";
       flex: none;
-      width: 1.5em;
-      height: 1.5em;
-      background: url("/favicon.ico") center / contain no-repeat;
+      width: 0.85em;
+      height: 0.85em;
+      background: var(--accent-warm);
+      border-radius: 2px;
     }
   }
 }
@@ -66,10 +68,11 @@ h1 {
   font-weight: 700;
 }
 
+// Разделы без линейки — разделение воздушным отступом, меньше hairline-шума
+// (линейки уже есть у шапки, футера, кода, колаутов, дерева).
 article h2,
 .center h2 {
-  border-bottom: 1px solid var(--lightgray);
-  padding-bottom: 0.4rem;
+  margin-top: 2.6rem;
 }
 
 // Код-блоки: панель на полтона от фона, бордер 1px, радиус ≤ 6px
@@ -96,8 +99,10 @@ pre > .clipboard-button {
 }
 
 // Ссылки: тонкое приглушённое подчёркивание, полный акцент по ховеру —
-// в статьях много ссылок, сплошной яркий акцент заливает текст
+// в статьях много ссылок, сплошной яркий акцент заливает текст.
+// Пилюля-фон убрана (base.scss): только подчёркивание, чистая полоса текста.
 .center a {
+  text-decoration-line: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
@@ -369,7 +374,6 @@ footer {
     &:focus-visible {
       color: var(--secondary);
     }
-
   }
 }
 
@@ -421,6 +425,7 @@ footer {
       font-size: 0.68rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      opacity: 0.7;
     }
   }
 }
@@ -494,9 +499,15 @@ footer {
     }
   }
 
-  li.depth-1 > a { padding-left: 14px; }
-  li.depth-2 > a { padding-left: 28px; }
-  li.depth-3 > a { padding-left: 42px; }
+  li.depth-1 > a {
+    padding-left: 14px;
+  }
+  li.depth-2 > a {
+    padding-left: 28px;
+  }
+  li.depth-3 > a {
+    padding-left: 42px;
+  }
 }
 
 // Оглавление: тихий mono-лейбл «НА СТРАНИЦЕ» вместо «Оглавление» —
@@ -511,6 +522,7 @@ footer {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--gray);
+    opacity: 0.7;
   }
 }
 
@@ -773,7 +785,7 @@ footer {
     margin: 0;
     font-size: 1.2rem;
     line-height: 1.3;
-    color: var(--secondary);
+    color: var(--dark);
   }
 
   p {
@@ -791,7 +803,7 @@ footer {
     border-color: var(--secondary);
 
     h3 {
-      color: var(--tertiary);
+      color: var(--secondary);
     }
   }
 }

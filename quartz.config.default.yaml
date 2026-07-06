@@ -23,9 +23,9 @@ configuration:
       lightMode:
         light: "#EEF0F2"
         lightgray: "#C9CED4"
-        gray: "#5F6872"
+        gray: "#646E78"
         darkgray: "#1D2126"
-        dark: "#101317"
+        dark: "#0B0D10"
         secondary: "#2B5FC7"
         tertiary: "#1E4CAB"
         highlight: rgba(43, 95, 199, 0.08)
@@ -33,7 +33,7 @@ configuration:
       darkMode:
         light: "#191D22"
         lightgray: "#2F353C"
-        gray: "#9AA4AD"
+        gray: "#9DA6AE"
         darkgray: "#D9DFE5"
         dark: "#F2F4F6"
         secondary: "#8CB0E8"
