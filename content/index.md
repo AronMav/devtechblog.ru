@@ -2,4 +2,4 @@
 title: Главная
 ---
 
-Практические заметки на стыке 1С и DevOps: сборочные конвейеры, Docker, Jenkins, EDT и автоматизация рутины. Каждая инструкция проверена на живом стенде. Автор: [AronMav](https://github.com/AronMav).
+Личный блог Андрея Мерлякова (AronMav) — инженера из Ижевска. Здесь о DevOps и автоматизации 1С: сборочные линии на Jenkins, Docker, EDT и OneScript, каждая инструкция проверена на живом стенде. Рядом — Rust, AI-шлюзы и self-hosted. Автор: [AronMav](https://github.com/AronMav).
