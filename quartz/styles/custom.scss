@@ -1031,13 +1031,24 @@ body[data-slug="index"] {
 button.darkmode {
   background: none;
   border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  min-height: 1.4rem;
   padding: 0.3rem;
   cursor: pointer;
   color: var(--gray);
 
+  // Stock darkmode.scss позиционирует svg абсолютно (top: calc(50% - 10px),
+  // калибровано под 20px) и фиксирует кнопку 32×20 — на 0.85rem-иконке она
+  // садится выше центра. Возвращаем в поток, центрируем флексом.
   svg {
-    width: 0.95rem;
-    height: 0.95rem;
+    position: static;
+    top: auto;
+    width: 0.85rem;
+    height: 0.85rem;
     fill: currentColor;
   }
 
