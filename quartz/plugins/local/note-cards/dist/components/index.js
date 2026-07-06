@@ -26,6 +26,7 @@ function isArticle(page) {
   if (slug === "" || slug === "index" || slug === "404") return false;
   if (slug === "tags" || slug.startsWith("tags/")) return false;
   if (slug.endsWith("/index")) return false;
+  if (page.unlisted) return false;
   return true;
 }
 function pageDate(page) {

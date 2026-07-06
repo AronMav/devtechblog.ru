@@ -2,30 +2,34 @@ import type {
   QuartzComponent,
   QuartzComponentProps,
   QuartzComponentConstructor,
-} from "@quartz-community/types";
+} from "@quartz-community/types"
 
 type PageLike = {
-  slug?: string;
-  description?: string;
-  frontmatter?: { title?: string };
-  dates?: { created?: Date; modified?: Date };
-};
+  slug?: string
+  description?: string
+  frontmatter?: { title?: string }
+  dates?: { created?: Date; modified?: Date }
+  unlisted?: boolean
+}
 
 /** Служебные страницы и индексы папок в список статей не попадают. */
 function isArticle(page: PageLike): boolean {
-  const slug = page.slug ?? "";
-  if (slug === "" || slug === "index" || slug === "404") return false;
-  if (slug === "tags" || slug.startsWith("tags/")) return false;
-  if (slug.endsWith("/index")) return false;
-  return true;
+  const slug = page.slug ?? ""
+  if (slug === "" || slug === "index" || slug === "404") return false
+  if (slug === "tags" || slug.startsWith("tags/")) return false
+  if (slug.endsWith("/index")) return false
+  // unlisted-страницы (напр. «Обо мне») — доступны по прямой ссылке,
+  // но не выводятся как карточки статей.
+  if (page.unlisted) return false
+  return true
 }
 
 function pageDate(page: PageLike): Date | undefined {
-  return page.dates?.modified ?? page.dates?.created;
+  return page.dates?.modified ?? page.dates?.created
 }
 
 function formatDate(d: Date, locale: string): string {
-  return d.toLocaleDateString(locale, { day: "2-digit", month: "short", year: "numeric" });
+  return d.toLocaleDateString(locale, { day: "2-digit", month: "short", year: "numeric" })
 }
 
 /**
@@ -34,31 +38,31 @@ function formatDate(d: Date, locale: string): string {
  * а не CSS-ом на клиенте.
  */
 const NoteCards: QuartzComponent = ({ fileData, allFiles, cfg }: QuartzComponentProps) => {
-  if (fileData.slug !== "index") return null;
+  if (fileData.slug !== "index") return null
 
-  const locale = (cfg?.locale as string) ?? "ru-RU";
+  const locale = (cfg?.locale as string) ?? "ru-RU"
   const pages = (allFiles as PageLike[])
     .filter(isArticle)
-    .sort((a, b) => (pageDate(b)?.getTime() ?? 0) - (pageDate(a)?.getTime() ?? 0));
+    .sort((a, b) => (pageDate(b)?.getTime() ?? 0) - (pageDate(a)?.getTime() ?? 0))
 
-  if (pages.length === 0) return null;
+  if (pages.length === 0) return null
 
   return (
     <div class="note-cards">
       {pages.map((page) => {
-        const title = page.frontmatter?.title ?? page.slug;
-        const date = pageDate(page);
-        const desc = (page.description ?? "").trim();
+        const title = page.frontmatter?.title ?? page.slug
+        const date = pageDate(page)
+        const desc = (page.description ?? "").trim()
         return (
           <a class="note-card" href={`./${page.slug}`}>
             {date && <span class="note-card-date">{formatDate(date, locale)}</span>}
             <h3>{title}</h3>
             {desc.length > 0 && <p>{desc}</p>}
           </a>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-export default (() => NoteCards) satisfies QuartzComponentConstructor;
+export default (() => NoteCards) satisfies QuartzComponentConstructor

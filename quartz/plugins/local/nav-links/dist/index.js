@@ -32,7 +32,8 @@ var NavLinks = ({ fileData, displayClass }) => {
   const base = pathToRoot(fileData.slug);
   return /* @__PURE__ */ u2("nav", { class: `nav-links ${displayClass ?? ""}`, children: [
     /* @__PURE__ */ u2("a", { href: base, children: "\u0437\u0430\u043C\u0435\u0442\u043A\u0438" }),
-    /* @__PURE__ */ u2("a", { href: `${base}/tags/`, children: "\u0442\u0435\u0433\u0438" })
+    /* @__PURE__ */ u2("a", { href: `${base}/tags/`, children: "\u0442\u0435\u0433\u0438" }),
+    /* @__PURE__ */ u2("a", { href: `${base}/about`, children: "\u043E\u0431\u043E \u043C\u043D\u0435" })
   ] });
 };
 NavLinks.beforeDOMLoaded = `
