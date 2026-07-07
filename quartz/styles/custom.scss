@@ -764,7 +764,10 @@ footer {
 
   // Затемняющий бэкдроп за панелью: тап по нему закрывает (логика в
   // nav-links — клик вне контента панели). Псевдоэлемент корня.
-  .explorer:not(.collapsed)::before,
+  // ВАЖНО: бэкдроп гейтим по .js-ready — до инициализации скрипта у
+  // explorer ещё нет класса .collapsed, и без js-ready этот тёмный
+  // оверлей заливал весь экран на время загрузки («сайт темнеет»).
+  .explorer.js-ready:not(.collapsed)::before,
   .toc.open::before {
     content: "";
     position: fixed;
